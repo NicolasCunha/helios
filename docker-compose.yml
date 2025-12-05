@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        DOCKER_GID: ${DOCKER_GID:-984}
     container_name: helios
     restart: unless-stopped
     ports:
