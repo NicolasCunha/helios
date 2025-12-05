@@ -1,0 +1,34 @@
+services:
+  helios:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DOCKER_GID: ${DOCKER_GID:-984}
+    container_name: helios
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - config/helios.env
+    volumes:
+      # Mount Docker socket to manage containers
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Persist database
+      - helios-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - helios-network
+
+volumes:
+  helios-data:
+    driver: local
+
+networks:
+  helios-network:
+    driver: bridge
