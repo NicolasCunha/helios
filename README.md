@@ -58,6 +58,8 @@ volumes:
 
 Start with: `docker compose up -d`
 
+**Note:** The container automatically detects your host's Docker socket GID at runtime and configures permissions accordingly. No manual configuration needed!
+
 Access at: [http://localhost:5000](http://localhost:5000)
 
 ### Using Docker CLI
@@ -66,6 +68,10 @@ Access at: [http://localhost:5000](http://localhost:5000)
 docker run -d \
   --name helios \
   -p 5000:5000 \
+  -e HELIOS_SERVER_PORT=8081 \
+  -e HELIOS_SERVER_MODE=release \
+  -e HELIOS_CPU_THRESHOLD=80.0 \
+  -e HELIOS_MEMORY_THRESHOLD=80.0 \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   -v helios-data:/app/data \
   --restart unless-stopped \

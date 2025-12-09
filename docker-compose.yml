@@ -1,8 +1,6 @@
 services:
   helios:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: cunhanicolas/helios:latest
     container_name: helios
     restart: unless-stopped
     ports:
