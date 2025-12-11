@@ -37,10 +37,10 @@ type DockerConfig struct {
 
 // HealthCheckConfig contains health check monitoring settings.
 type HealthCheckConfig struct {
-	Interval         time.Duration
-	CPUThreshold     float64
-	MemoryThreshold  float64
-	Enabled          bool
+	Interval        time.Duration
+	CPUThreshold    float64
+	MemoryThreshold float64
+	Enabled         bool
 }
 
 // LogRetentionConfig contains log retention settings.
@@ -53,7 +53,6 @@ type LogRetentionConfig struct {
 //
 // Configuration variables:
 //   - HELIOS_SERVER_HOST (default: "0.0.0.0")
-//   - HELIOS_SERVER_PORT (default: "8080")
 //   - HELIOS_SERVER_MODE (default: "debug")
 //   - HELIOS_DB_PATH (default: "/app/data/helios.db" or "./helios.db")
 //   - HELIOS_DOCKER_HOST (default: "unix:///var/run/docker.sock")

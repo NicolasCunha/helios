@@ -60,13 +60,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy Go binary from builder
 COPY --from=go-builder /app/helios /usr/local/bin/helios
 
-# Accept Docker GID as build argument
-ARG DOCKER_GID=984
-
-# Create docker group with host GID and helios user
-RUN groupadd -g ${DOCKER_GID} docker || true && \
-    groupadd -g 1001 helios && \
-    useradd -r -u 1001 -g helios -G docker -s /bin/false helios && \
+# Create helios user (docker group will be created at runtime)
+RUN groupadd -g 1001 helios && \
+    useradd -r -u 1001 -g helios -s /bin/false helios && \
     mkdir -p /app/data && \
     chown -R helios:helios /app
 
@@ -79,8 +75,13 @@ COPY config/nginx.conf /etc/nginx/conf.d/default.conf
 # Copy supervisor configuration
 COPY config/supervisord.conf /etc/supervisord.conf
 
+# Copy entrypoint script
+COPY config/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Expose port 5000
 EXPOSE 5000
 
-# Start supervisor to run both services
+# Use entrypoint to configure docker group at runtime
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
