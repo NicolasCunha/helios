@@ -1,3 +1,5 @@
+> This is a personal learning project. You’re welcome to use it as a reference or as a starting point for your own ideas. However, I strongly recommend using more mature and stable solutions available in the market rather than relying on this project for production needs.
+
 # Helios 🌞
 
 **Helios** is a modern, lightweight Docker container management dashboard built with Go and React. It provides real-time monitoring, resource tracking, and comprehensive container, image, volume, and network management through a clean web interface.
